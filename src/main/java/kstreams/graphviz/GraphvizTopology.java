@@ -18,6 +18,9 @@ public class GraphvizTopology {
         List<Edge> topicSinkEdges = new ArrayList<>();
         List<Edge> storeSinkEdges = new ArrayList<>();
         List<SubGraph> subGraphs = new ArrayList<>();
+        List<Edge> globalStoreSourceEdges = new ArrayList<>();
+        List<Edge> globalStoreSinkEdges = new ArrayList<>();
+        List<SubGraph> globalStoreSubGraphs = new ArrayList<>();
 
         description
             .subtopologies()
@@ -50,13 +53,37 @@ public class GraphvizTopology {
                 subGraphs.add(subGraph);
             });
 
-        // TODO: Also extract global state store sections from TopologyDescription
+        description.globalStores()
+            .stream()
+            .forEach(store -> {
+                List<Edge> storeEdges = new ArrayList<>();
+                
+                Source source = store.source();
+                Processor processor = store.processor();
+                
+                List<Edge> sourceTopicEdges = exractTopicEdges(source);
+                List<Edge> processorStoreEdges = extractTopicEdges(processor);
+                
+                List<Edge> sourceProcessorEdge = extractSubGraphEdges(source);
+                List<Edge> processorEdges = extractSubGraphEdges(processor);
+
+                globalStoreSourceEdges.addAll(sourceTopicEdges);
+                globalStoreSinkEdges.addAll(processorStoreEdges);
+                
+                storeEdges.addAll(sourceProcessorEdge);
+                storeEdges.addAll(processorEdges);
+
+                globalStoreSubGraphs.add(new SubGraph(store.id(), storeEdges));
+            });
 
         return new GraphvizTopologyDescription(
             topicSourceEdges,
             topicSinkEdges,
             storeSinkEdges,
-            subGraphs
+            subGraphs,
+            globalStoreSourceEdges,
+            globalStoreSinkEdges,
+            globalStoreSubGraphs
         );
     }
 

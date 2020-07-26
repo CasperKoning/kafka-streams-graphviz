@@ -6,6 +6,8 @@ digraph "kafka-streams-topology" {
 "rekey-topic-2" ["shape"="cylinder"]
 "output-topic" ["shape"="cylinder"]
 "state-store" ["shape"="cylinder"]
+"global-topic" ["shape"="cylinder"]
+"global-topic-STATE-STORE-0000000003" ["shape"="cylinder"]
 subgraph "cluster_topology_0" {
 graph ["style"="filled","label"="Subtopology 0","labeljust"="l"]
 node ["style"="filled","fillcolor"="white"]
@@ -31,6 +33,11 @@ node ["style"="filled","fillcolor"="white"]
 "KSTREAM-LEFTJOIN-0000000016" -> "KSTREAM-FLATMAPVALUES-0000000017" ["arrowhead"="normal"]
 "KSTREAM-FLATMAPVALUES-0000000017" -> "KSTREAM-SINK-0000000018" ["arrowhead"="normal"]
 }
+subgraph "cluster_topology_2" {
+graph ["style"="filled","label"="Subtopology 2","labeljust"="l"]
+node ["style"="filled","fillcolor"="white"]
+"KSTREAM-SOURCE-0000000004" -> "KTABLE-SOURCE-0000000005" ["arrowhead"="normal"]
+}
 "input-topic-1" -> "KSTREAM-SOURCE-0000000000" ["arrowhead"="normal"]
 "input-topic-2" -> "KSTREAM-SOURCE-0000000001" ["arrowhead"="normal"]
 "input-topic-3" -> "KSTREAM-SOURCE-0000000002" ["arrowhead"="normal"]
@@ -40,4 +47,6 @@ node ["style"="filled","fillcolor"="white"]
 "KSTREAM-SINK-0000000011" -> "rekey-topic-2" ["arrowhead"="normal"]
 "KSTREAM-SINK-0000000018" -> "output-topic" ["arrowhead"="normal"]
 "KSTREAM-AGGREGATE-0000000014" -> "state-store" ["arrowhead"="normal"]
+"global-topic" -> "KSTREAM-SOURCE-0000000004" ["arrowhead"="normal"]
+"KTABLE-SOURCE-0000000005" -> "global-topic-STATE-STORE-0000000003" ["arrowhead"="normal"]
 }

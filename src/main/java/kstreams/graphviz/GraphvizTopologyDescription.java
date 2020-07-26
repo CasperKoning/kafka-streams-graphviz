@@ -13,17 +13,26 @@ public class GraphvizTopologyDescription {
     private final List<Edge> topicSinkEdges;
     private final List<Edge> storeSinkEdges;
     private final List<SubGraph> subGraphs;
+    private final List<Edge> globalStoreSourceEdges;
+    private final List<Edge> globalStoreSinkEdges;
+    private final List<SubGraph> globalStoreSubGraphs;
 
     GraphvizTopologyDescription(
         List<Edge> topicSourceEdges, 
         List<Edge> topicSinkEdges, 
         List<Edge> storeSinkEdges, 
-        List<SubGraph> subGraphs
+        List<SubGraph> subGraphs,
+        List<Edge> globalStoreSourceEdges,
+        List<Edge> globalStoreSinkEdges,
+        List<SubGraph> globalStoreSubGraphs
     ) {
         this.topicSourceEdges = topicSourceEdges;
         this.topicSinkEdges = topicSinkEdges;
         this.storeSinkEdges = storeSinkEdges;
         this.subGraphs = subGraphs;
+        this.globalStoreSourceEdges = globalStoreSourceEdges;
+        this.globalStoreSinkEdges = globalStoreSinkEdges;
+        this.globalStoreSubGraphs = globalStoreSubGraphs;
     }
 
     public Graph asGraphvizGraph() {
@@ -31,7 +40,10 @@ public class GraphvizTopologyDescription {
             .with(topicSourceEdges.stream().map(Edge::asGraphviz).collect(Collectors.toList()))
             .with(topicSinkEdges.stream().map(Edge::asGraphviz).collect(Collectors.toList()))
             .with(storeSinkEdges.stream().map(Edge::asGraphviz).collect(Collectors.toList()))
-            .with(subGraphs.stream().map(SubGraph::asGraphviz).collect(Collectors.toList()));
+            .with(subGraphs.stream().map(SubGraph::asGraphviz).collect(Collectors.toList()))
+            .with(globalStoreSourceEdges.stream().map(Edge::asGraphviz).collect(Collectors.toList()))
+            .with(globalStoreSinkEdges.stream().map(Edge::asGraphviz).collect(Collectors.toList()))
+            .with(globalStoreSubGraphs.stream().map(SubGraph::asGraphviz).collect(Collectors.toList()));
     }
 
     interface Node {

@@ -7,6 +7,8 @@ edge ["dir"="forward"]
 "rekey-topic-2" ["shape"="cylinder"]
 "output-topic" ["shape"="cylinder"]
 "state-store" ["shape"="cylinder"]
+"global-topic" ["shape"="cylinder"]
+"global-topic-STATE-STORE-0000000003" ["shape"="cylinder"]
 subgraph "cluster_topology_0" {
 edge ["dir"="forward"]
 graph ["style"="filled","label"="Subtopology 0","labeljust"="l"]
@@ -35,6 +37,12 @@ node ["style"="filled","fillcolor"="white"]
 "KSTREAM-LEFTJOIN-0000000016" -> "KSTREAM-FLATMAPVALUES-0000000017" ["arrowhead"="normal"]
 "KSTREAM-FLATMAPVALUES-0000000017" -> "KSTREAM-SINK-0000000018" ["arrowhead"="normal"]
 }
+subgraph "cluster_topology_2" {
+edge ["dir"="forward"]
+graph ["style"="filled","label"="Subtopology 2","labeljust"="l"]
+node ["style"="filled","fillcolor"="white"]
+"KSTREAM-SOURCE-0000000004" -> "KTABLE-SOURCE-0000000005" ["arrowhead"="normal"]
+}
 {
 edge ["dir"="none"]
 graph ["rank"="same"]
@@ -51,4 +59,6 @@ graph ["rank"="same"]
 "KSTREAM-SINK-0000000011" -> "rekey-topic-2" ["arrowhead"="normal"]
 "KSTREAM-SINK-0000000018" -> "output-topic" ["arrowhead"="normal"]
 "KSTREAM-AGGREGATE-0000000014" -> "state-store" ["arrowhead"="normal"]
+"global-topic" -> "KSTREAM-SOURCE-0000000004" ["arrowhead"="normal"]
+"KTABLE-SOURCE-0000000005" -> "global-topic-STATE-STORE-0000000003" ["arrowhead"="normal"]
 }
