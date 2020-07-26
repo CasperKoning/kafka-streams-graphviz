@@ -27,7 +27,7 @@ public class GraphvizTopologyDescription {
     }
 
     public Graph asGraphvizGraph() {
-        return graph("my-graph").directed()
+        return graph("kafka-streams-topology").directed()
             .with(topicSourceEdges.stream().map(Edge::asGraphviz).collect(Collectors.toList()))
             .with(topicSinkEdges.stream().map(Edge::asGraphviz).collect(Collectors.toList()))
             .with(storeSinkEdges.stream().map(Edge::asGraphviz).collect(Collectors.toList()))
