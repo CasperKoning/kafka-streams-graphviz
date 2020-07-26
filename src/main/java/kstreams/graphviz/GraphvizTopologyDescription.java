@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.stream.Stream;
 import java.util.stream.Collectors;
 
+import guru.nidi.graphviz.attribute.*;
 import guru.nidi.graphviz.model.*;
 import static guru.nidi.graphviz.model.Factory.*;
 
@@ -34,7 +35,7 @@ public class GraphvizTopologyDescription {
     }
 
     interface Node {
-        String getIdentifier();
+        guru.nidi.graphviz.model.Node asGraphviz();
     }
 
     static class TopicNode implements Node {
@@ -44,9 +45,9 @@ public class GraphvizTopologyDescription {
             this.identifier = identifier;
         }
 
-        @Override()
-        public String getIdentifier() {
-            return this.identifier;
+        @Override
+        public guru.nidi.graphviz.model.Node asGraphviz() {
+            return node(this.identifier).with(Shape.CYLINDER);
         }
     }
 
@@ -57,9 +58,9 @@ public class GraphvizTopologyDescription {
             this.identifier = identifier;
         }
 
-        @Override()
-        public String getIdentifier() {
-            return this.identifier;
+        @Override
+        public guru.nidi.graphviz.model.Node asGraphviz() {
+            return node(this.identifier);
         }
     }
 
@@ -73,10 +74,7 @@ public class GraphvizTopologyDescription {
         }
 
         private guru.nidi.graphviz.model.Node asGraphviz() {
-            return node(this.start.getIdentifier())
-                .link(to(
-                    node(this.end.getIdentifier())
-                ));
+            return this.start.asGraphviz().link(to(this.end.asGraphviz()));
         }
     }
 
@@ -89,8 +87,14 @@ public class GraphvizTopologyDescription {
             this.edges = edges;
         }
 
+        /**
+         * When changing the styling here, be aware that subgraph names need to start with cluster_ 
+         * and need some other finnicky attribute combinations before they will get rendered as an 
+         * actual cluster (with a filled rectangle).
+         */
         private guru.nidi.graphviz.model.Graph asGraphviz() {
-            return graph("subtopology-" + this.id)
+            return graph("cluster_topology_" + this.id)
+                .graphAttr().with(Style.FILLED, Label.of("Subtopology " + this.id).justify(Label.Justification.LEFT))
                 .with(edges.stream().map(Edge::asGraphviz).collect(Collectors.toList()));
         }
     }
