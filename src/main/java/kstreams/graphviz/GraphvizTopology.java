@@ -34,11 +34,11 @@ public class GraphvizTopology {
                     .forEach(node -> {
                         if (node instanceof Source) {
                             Source source = (Source) node;
-                            topicSourceEdges.addAll(exractTopicEdges(source));
+                            topicSourceEdges.addAll(extractTopicEdges(source));
                             subGraphEdges.addAll(extractSubGraphEdges(source));
                         } else if (node instanceof Sink) {
                             Sink sink = (Sink) node;
-                            topicSinkEdges.addAll(exractTopicEdges(sink));
+                            topicSinkEdges.addAll(extractTopicEdges(sink));
                             subGraphEdges.addAll(extractSubGraphEdges(sink));
                         } else if (node instanceof Processor) {
                             Processor processor = (Processor) node;
@@ -61,7 +61,7 @@ public class GraphvizTopology {
                 Source source = store.source();
                 Processor processor = store.processor();
                 
-                List<Edge> sourceTopicEdges = exractTopicEdges(source);
+                List<Edge> sourceTopicEdges = extractTopicEdges(source);
                 List<Edge> processorStoreEdges = extractTopicEdges(processor);
                 
                 List<Edge> sourceProcessorEdge = extractSubGraphEdges(source);
@@ -87,7 +87,7 @@ public class GraphvizTopology {
         );
     }
 
-    private static List<Edge> exractTopicEdges(Source source) {
+    private static List<Edge> extractTopicEdges(Source source) {
         return source
             .topicSet()
             .stream()
@@ -98,7 +98,7 @@ public class GraphvizTopology {
             .collect(Collectors.toList());
     }
 
-    private static List<Edge> exractTopicEdges(Sink sink) {
+    private static List<Edge> extractTopicEdges(Sink sink) {
         return Collections.singletonList(
             new Edge(
                 new ProcessNode(sink.name()), new TopicNode(sink.topic())
