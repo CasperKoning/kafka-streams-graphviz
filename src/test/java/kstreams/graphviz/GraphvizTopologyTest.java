@@ -20,6 +20,11 @@ class GraphvizTopologyTest {
             .asGraphvizGraph();
         Graphviz
             .fromGraph(g)
+            .render(Format.DOT)
+            .toFile(new File("ex1.dot"));
+
+        Graphviz
+            .fromGraph(g)
             .render(Format.PNG)
             .toFile(new File("ex1.png"));
     }

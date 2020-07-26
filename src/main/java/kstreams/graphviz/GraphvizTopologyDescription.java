@@ -74,7 +74,12 @@ public class GraphvizTopologyDescription {
         }
 
         private guru.nidi.graphviz.model.Node asGraphviz() {
-            return this.start.asGraphviz().link(to(this.end.asGraphviz()));
+            return this.start.asGraphviz()
+                .link(
+                    to(this.end.asGraphviz())
+                        .with(Arrow.NORMAL)
+                );
+                
         }
     }
 
@@ -93,8 +98,9 @@ public class GraphvizTopologyDescription {
          * actual cluster (with a filled rectangle).
          */
         private guru.nidi.graphviz.model.Graph asGraphviz() {
-            return graph("cluster_topology_" + this.id)
+            return graph("cluster_topology_" + this.id).directed()
                 .graphAttr().with(Style.FILLED, Label.of("Subtopology " + this.id).justify(Label.Justification.LEFT))
+                .nodeAttr().with(Style.FILLED, Color.WHITE.fill())
                 .with(edges.stream().map(Edge::asGraphviz).collect(Collectors.toList()));
         }
     }
