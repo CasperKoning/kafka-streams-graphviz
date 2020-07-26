@@ -5,11 +5,11 @@ import org.apache.kafka.streams.Topology;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-class LibraryTest {
+class GraphvizTopologyTest {
     @Test
     void testPlainDescribeToStringImplementation() {
         Topology topology = TestKafkaStreamsTopology.get();
-        String description = GraphvizTopologyDescription.describeGraphviz(topology);
+        GraphvizTopologyDescription description = GraphvizTopology.describe(topology);
         assertNotNull(description);
     }
 }
