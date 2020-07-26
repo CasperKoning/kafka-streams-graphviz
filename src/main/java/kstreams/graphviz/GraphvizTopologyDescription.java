@@ -92,13 +92,10 @@ public class GraphvizTopologyDescription {
             this.edges = edges;
         }
 
-        /**
-         * When changing the styling here, be aware that subgraph names need to start with cluster_ 
-         * and need some other finnicky attribute combinations before they will get rendered as an 
-         * actual cluster (with a filled rectangle).
-         */
         private guru.nidi.graphviz.model.Graph asGraphviz() {
-            return graph("cluster_topology_" + this.id).directed()
+            return graph("topology_" + this.id)
+                .directed()
+                .cluster()
                 .graphAttr().with(Style.FILLED, Label.of("Subtopology " + this.id).justify(Label.Justification.LEFT))
                 .nodeAttr().with(Style.FILLED, Color.WHITE.fill())
                 .with(edges.stream().map(Edge::asGraphviz).collect(Collectors.toList()));
