@@ -1,15 +1,26 @@
 package kstreams.graphviz;
 
+import java.io.*;
+import java.nio.*;
+
 import org.apache.kafka.streams.Topology;
+
+import guru.nidi.graphviz.engine.*;
+import guru.nidi.graphviz.model.*;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GraphvizTopologyTest {
     @Test
-    void testPlainDescribeToStringImplementation() {
+    void testPlainDescribeToStringImplementation() throws Exception {
         Topology topology = TestKafkaStreamsTopology.get();
-        GraphvizTopologyDescription description = GraphvizTopology.describe(topology);
-        assertNotNull(description);
+        Graph g = GraphvizTopology
+            .describe(topology)
+            .asGraphvizGraph();
+        Graphviz
+            .fromGraph(g)
+            .render(Format.PNG)
+            .toFile(new File("ex1.png"));
     }
 }

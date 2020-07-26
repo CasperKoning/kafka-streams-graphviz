@@ -1,6 +1,11 @@
 package kstreams.graphviz;
 
 import java.util.*;
+import java.util.stream.Stream;
+import java.util.stream.Collectors;
+
+import guru.nidi.graphviz.model.*;
+import static guru.nidi.graphviz.model.Factory.*;
 
 public class GraphvizTopologyDescription {
     private final List<Edge> topicSourceEdges;
@@ -18,6 +23,14 @@ public class GraphvizTopologyDescription {
         this.topicSinkEdges = topicSinkEdges;
         this.storeSinkEdges = storeSinkEdges;
         this.subGraphs = subGraphs;
+    }
+
+    public Graph asGraphvizGraph() {
+        return graph("my-graph").directed()
+            .with(topicSourceEdges.stream().map(Edge::asGraphviz).collect(Collectors.toList()))
+            .with(topicSinkEdges.stream().map(Edge::asGraphviz).collect(Collectors.toList()))
+            .with(storeSinkEdges.stream().map(Edge::asGraphviz).collect(Collectors.toList()))
+            .with(subGraphs.stream().map(SubGraph::asGraphviz).collect(Collectors.toList()));
     }
 
     interface Node {
@@ -51,12 +64,19 @@ public class GraphvizTopologyDescription {
     }
 
     static class Edge {
-        final Node start;
-        final Node end;
+        private final Node start;
+        private final Node end;
 
         public Edge(Node start, Node end) {
             this.start = start;
             this.end = end;
+        }
+
+        private guru.nidi.graphviz.model.Node asGraphviz() {
+            return node(this.start.getIdentifier())
+                .link(to(
+                    node(this.end.getIdentifier())
+                ));
         }
     }
 
@@ -67,6 +87,11 @@ public class GraphvizTopologyDescription {
         public SubGraph(int id, List<Edge> edges) {
             this.id = id;
             this.edges = edges;
+        }
+
+        private guru.nidi.graphviz.model.Graph asGraphviz() {
+            return graph("subtopology-" + this.id)
+                .with(edges.stream().map(Edge::asGraphviz).collect(Collectors.toList()));
         }
     }
 }
