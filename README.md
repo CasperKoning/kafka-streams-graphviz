@@ -47,6 +47,9 @@ Graphviz
     .toFile(new File("examples/ex1.png"));
 ```
 
+For [`TestKafkaStreamsTopology`](test/java/kstreams/graphviz/TestKafkaStreamsTopology) this yields the following image:
+![examples/ex1.png](examples/ex1.png)
+
 #### Finetuning with graphviz-java
 Further finetuning of the Graph can be done programmatically by extending the `Graph`, e.g.:
 ```java
@@ -67,6 +70,9 @@ Graphviz
 ```
 
 See [graphviz-java](https://github.com/nidi3/graphviz-java) for more details.
+
+For [`TestKafkaStreamsTopology`](test/java/kstreams/graphviz/TestKafkaStreamsTopology) this yields the following image:
+![examples/ex2.png](examples/ex2.png)
 
 ## Acknowledgements
 This project would never be able to exist without the following projects:
