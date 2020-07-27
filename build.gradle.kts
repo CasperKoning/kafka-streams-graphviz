@@ -1,3 +1,4 @@
+group = "xyz.casperkoning"
 version = "0.0.1-SNAPSHOT"
 
 plugins {
