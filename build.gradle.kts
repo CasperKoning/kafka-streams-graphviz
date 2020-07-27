@@ -1,6 +1,7 @@
 plugins {
     `java-library`
     `maven-publish`
+    `signing`
     id("net.researchgate.release") version "2.8.1"
 }
 
@@ -18,4 +19,23 @@ dependencies {
 
 val test by tasks.getting(Test::class) {
     useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            from(components["java"])
+        }
+    }
+
+    repositories {
+        maven {
+            name = "myLocalRepo"
+            url = uri("file://${buildDir}/repo")
+        }
+    }
+}
+
+signing {
+    sign(publishing.publications["mavenJava"])
 }
