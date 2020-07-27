@@ -17,7 +17,7 @@ StreamsBuilder builder = new StreamsBuilder();
 
 Topology topology = builder.build();
 ```
-(see [`TestKafkaStreamsTopology`](test/java/kstreams/graphviz/TestKafkaStreamsTopology) for a more complete example)
+(see [`TestKafkaStreamsTopology`](src/test/java/kstreams/graphviz/TestKafkaStreamsTopology.java) for a more complete example)
 
 ### Describe as graphviz graph
 Using the Kafka Streams `Topology` one can then use this library to describe this as a `graphviz-java` `Graph`:
@@ -47,7 +47,7 @@ Graphviz
     .toFile(new File("examples/ex1.png"));
 ```
 
-For [`TestKafkaStreamsTopology`](test/java/kstreams/graphviz/TestKafkaStreamsTopology) this yields the following image:
+For [`TestKafkaStreamsTopology`](src/test/java/kstreams/graphviz/TestKafkaStreamsTopology.java) this yields the following image:
 ![examples/ex1.png](examples/ex1.png)
 
 #### Finetuning with graphviz-java
@@ -71,7 +71,7 @@ Graphviz
 
 See [graphviz-java](https://github.com/nidi3/graphviz-java) for more details.
 
-For [`TestKafkaStreamsTopology`](test/java/kstreams/graphviz/TestKafkaStreamsTopology) this yields the following image:
+For [`TestKafkaStreamsTopology`](src/test/java/kstreams/graphviz/TestKafkaStreamsTopology.java) this yields the following image:
 ![examples/ex2.png](examples/ex2.png)
 
 ## Acknowledgements
