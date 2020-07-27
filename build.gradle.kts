@@ -1,8 +1,7 @@
-group = "xyz.casperkoning"
-version = "0.0.1-SNAPSHOT"
-
 plugins {
     `java-library`
+    `maven-publish`
+    id("net.researchgate.release") version "2.8.1"
 }
 
 repositories {
