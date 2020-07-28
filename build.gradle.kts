@@ -71,3 +71,8 @@ signing {
     })
     sign(publishing.publications["mavenJava"])
 }
+
+// Ensure that running a gradle release also executes the uploadArchives task
+tasks.afterReleaseBuild {
+    dependsOn(tasks.publish)
+}
