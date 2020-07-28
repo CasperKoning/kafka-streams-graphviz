@@ -1,3 +1,5 @@
+extra["isReleaseVersion"] = !version.toString().endsWith("SNAPSHOT")
+
 plugins {
     `java-library`
     `maven-publish`
@@ -42,5 +44,8 @@ publishing {
 }
 
 signing {
+    setRequired({
+        (project.extra["isReleaseVersion"] as Boolean) && gradle.taskGraph.hasTask("publish")
+    })
     sign(publishing.publications["mavenJava"])
 }
