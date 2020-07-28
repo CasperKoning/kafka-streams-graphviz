@@ -58,8 +58,15 @@ publishing {
     }
     repositories {
         maven {
-            name = "myLocalRepo"
-            url = uri("file://${buildDir}/repo")
+            val sonatypeUsername: String? by project
+            val sonatypePassword: String? by project
+            val releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+            val snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots"
+            url = uri(if (project.extra["isReleaseVersion"] as Boolean) releasesRepoUrl else snapshotsRepoUrl)
+            credentials {
+                username = sonatypeUsername
+                password = sonatypePassword
+            }
         }
     }
 }
