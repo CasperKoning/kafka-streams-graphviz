@@ -32,9 +32,31 @@ publishing {
     publications {
         create<MavenPublication>("mavenJava") {
             from(components["java"])
+            pom {
+                name.set("Kafka Streams Graphviz")
+                description.set("Library glueing together Kafka Streams Topology and Graphviz")
+                url.set("https://github.com/casperkoning/kafka-streams-graphviz")
+                licenses {
+                    license {
+                        name.set("The Apache License, Version 2.0")
+                        url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+                    }
+                }
+                developers {
+                    developer {
+                        id.set("casperkoning")
+                        name.set("Casper Koning")
+                        email.set("casper.e.koning@gmail.com")
+                    }
+                }
+                scm {
+                    connection.set("scm:https://github.com:CasperKoning/kafka-streams-graphviz.git")
+                    url.set("https://github.com:CasperKoning/kafka-streams-graphviz.git")
+                    developerConnection.set("scm:git:git://github.com:CasperKoning/kafka-streams-graphviz.git")
+                }
+            }
         }
     }
-
     repositories {
         maven {
             name = "myLocalRepo"
