@@ -44,15 +44,14 @@ publishing {
                 }
                 developers {
                     developer {
-                        id.set("casperkoning")
                         name.set("Casper Koning")
                         email.set("casper.e.koning@gmail.com")
                     }
                 }
                 scm {
-                    connection.set("scm:https://github.com:CasperKoning/kafka-streams-graphviz.git")
-                    url.set("https://github.com:CasperKoning/kafka-streams-graphviz.git")
-                    developerConnection.set("scm:git:git://github.com:CasperKoning/kafka-streams-graphviz.git")
+                    connection.set("scm:git:git://github.com:CasperKoning/kafka-streams-graphviz.git")
+                    url.set("https://github.com:CasperKoning/kafka-streams-graphviz")
+                    developerConnection.set("scm:git:ssh://github.com:CasperKoning/kafka-streams-graphviz.git")
                 }
             }
         }
